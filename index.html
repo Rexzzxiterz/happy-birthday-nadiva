@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selamat Ulang Tahun Nadiva</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to top, #ffccff, #ffffff);
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 50px 20px;
+      color: #d63384;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.2em;
+      color: #555;
+    }
+    .image-gallery {
+      margin-top: 30px;
+    }
+    .image-gallery img {
+      width: 200px;
+      height: auto;
+      margin: 10px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .balloon {
+      position: absolute;
+      width: 40px;
+      animation: float 6s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh); }
+      100% { transform: translateY(-100vh); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Selamat Ulang Tahun, Nadiva!</h1>
+    <p>Aku harap hari ini seindah senyumanmu. Semoga semua impianmu menjadi kenyataan!</p>
+    <div class="image-gallery">
+      <img src="foto1.jpg" alt="Nadiva 1" />
+      <img src="foto2.jpg" alt="Nadiva 2" />
+      <img src="foto3.jpg" alt="Nadiva 3" />
+      <img src="foto4.jpg" alt="Nadiva 4" />
+    </div>
+  </div>
+  <canvas id="snow"></canvas>
+  <script>
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    let snowflakes = [];
+    function createSnowflakes() {
+      for (let i = 0; i < 150; i++) {
+        snowflakes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 4 + 1,
+          speed: Math.random() + 0.5
+        });
+      }
+    }
+    function drawSnowflakes() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      for (let flake of snowflakes) {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      moveSnowflakes();
+    }
+    function moveSnowflakes() {
+      for (let flake of snowflakes) {
+        flake.y += flake.speed;
+        if (flake.y > height) {
+          flake.y = 0;
+          flake.x = Math.random() * width;
+        }
+      }
+    }
+    function animateSnow() {
+      drawSnowflakes();
+      requestAnimationFrame(animateSnow);
+    }
+    createSnowflakes();
+    animateSnow();
+  </script>
+  <script>
+    for (let i = 0; i < 10; i++) {
+      const balloon = document.createElement("img");
+      balloon.src = "https://i.ibb.co/GTf5qgb/balloon.png";
+      balloon.className = "balloon";
+      balloon.style.left = Math.random() * 100 + "vw";
+      balloon.style.animationDelay = Math.random() * 5 + "s";
+      document.body.appendChild(balloon);
+    }
+  </script>
+  <audio autoplay loop hidden>
+    <source src="romantic_song.mp3" type="audio/mp3" />
+  </audio>
+</body>
+</html>
